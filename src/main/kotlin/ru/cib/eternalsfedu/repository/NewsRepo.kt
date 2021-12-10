@@ -1,7 +1,7 @@
 package ru.cib.eternalsfedu.repository
 
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.repository.PagingAndSortingRepository
 import ru.cib.eternalsfedu.domain.News
 
-interface NewsRepo : JpaRepository<News, Long> {
+interface NewsRepo : PagingAndSortingRepository<News, Long> {
 }

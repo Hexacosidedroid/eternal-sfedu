@@ -11,3 +11,12 @@ fun NewsDto.toDomain(): News {
         text = current.text
     }
 }
+
+fun News.toDto(): NewsDto {
+    val current = this
+    return NewsDto().apply {
+        title = current.title
+        photo = current.photo
+        text = current.text
+    }
+}

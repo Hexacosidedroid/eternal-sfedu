@@ -8,7 +8,7 @@ import javax.persistence.Id
 import javax.persistence.Table
 
 @Entity
-@Table("news")
+@Table(name = "news")
 data class News(
     var title: String? = null,
     var text: String? = null,
