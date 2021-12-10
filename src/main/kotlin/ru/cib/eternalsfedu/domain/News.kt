@@ -14,6 +14,7 @@ data class News(
     var text: String? = null,
     @field:CreationTimestamp
     var creationTime: Date? = null,
+    var photo: String? = null,
     var heatCounter: Long? = null,
     var heatExpirationTime: Date? = null
 ) : Domain()
