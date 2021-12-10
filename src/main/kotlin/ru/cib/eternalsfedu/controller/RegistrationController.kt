@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
-import ru.cib.eternalsfedu.dto.NewsDto
-import ru.cib.eternalsfedu.repository.NewsRepo
+import ru.cib.eternalsfedu.dto.RegistrationDto
+import ru.cib.eternalsfedu.repository.RegistrationRepo
 import ru.cib.eternalsfedu.toDomain
 import ru.cib.eternalsfedu.toDto
 
