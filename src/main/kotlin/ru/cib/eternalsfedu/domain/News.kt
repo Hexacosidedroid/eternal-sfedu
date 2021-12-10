@@ -10,10 +10,11 @@ import javax.persistence.Table
 @Entity
 @Table("news")
 data class News(
-    var title: Long? = null,
+    var title: String? = null,
     var text: String? = null,
     @field:CreationTimestamp
     var creationTime: Date? = null,
+    var photo: String? = null,
     var heatCounter: Long? = null,
     var heatExpirationTime: Date? = null
 ) : Domain()
