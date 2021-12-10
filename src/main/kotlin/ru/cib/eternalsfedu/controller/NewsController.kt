@@ -17,8 +17,8 @@ class NewsController(
 ) {
     @GetMapping("/v1/news/getPaged?page={page}")
     fun getPaged(@PathVariable page: Long): MutableList<NewsDto> {
-        val firstPageWithTwoElements = PageRequest.of(page.toInt(), 10)
-        val allProducts = newsRepo.findAll(firstPageWithTwoElements)
+        val firstPageWithTenElements = PageRequest.of(page.toInt(), 10)
+        val allProducts = newsRepo.findAll(firstPageWithTenElements)
         val news = mutableListOf<NewsDto>()
         allProducts.forEach {
             news.add(it.toDto())

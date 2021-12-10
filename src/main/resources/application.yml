@@ -13,8 +13,8 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         enable_lazy_load_no_trans: true
         current_session_context_class: thread
-    hibernate:
-      ddl-auto: update
+#    hibernate:
+#      ddl-auto: create
 
 server:
   port: 9090
