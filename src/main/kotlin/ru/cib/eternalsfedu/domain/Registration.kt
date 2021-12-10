@@ -1,5 +1,7 @@
 package ru.cib.eternalsfedu.domain
 
+import org.hibernate.annotations.CreationTimestamp
+import java.util.*
 import javax.persistence.Entity
 import javax.persistence.Lob
 import javax.persistence.Table
@@ -12,5 +14,7 @@ data class Registration(
     var email: String? = null,
     var phone: String? = null,
     @field:Lob
-    var photo: ByteArray? = null
+    var photo: ByteArray? = null,
+    @field:CreationTimestamp
+    var creationTime: Date? = null,
 ) : Domain()

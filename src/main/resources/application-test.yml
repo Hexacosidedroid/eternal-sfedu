@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: "jdbc:postgresql://37.230.114.27:5432/postgres"
+    username: postgres
+    password: qwerty123
+  jpa:
+    open-in-view: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        enable_lazy_load_no_trans: true
+        current_session_context_class: thread
+    hibernate:
+      ddl-auto: create

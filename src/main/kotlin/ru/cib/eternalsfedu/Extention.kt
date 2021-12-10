@@ -3,8 +3,10 @@ package ru.cib.eternalsfedu
 import org.apache.commons.io.FileUtils
 import ru.cib.eternalsfedu.domain.Event
 import ru.cib.eternalsfedu.domain.News
+import ru.cib.eternalsfedu.domain.Program
 import ru.cib.eternalsfedu.dto.EventDto
 import ru.cib.eternalsfedu.dto.NewsDto
+import ru.cib.eternalsfedu.dto.ProgramDto
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,5 +46,23 @@ fun Event.toDto(): EventDto {
         title = current.title
         text = current.text
         photo = Base64.getEncoder().encodeToString(current.photo)
+    }
+}
+
+fun ProgramDto.toDomain(): Program {
+    val current = this
+    return Program().apply {
+        code = current.code
+        name = current.name
+        score = current.score
+    }
+}
+
+fun Program.toDto(): ProgramDto {
+    val current = this
+    return ProgramDto().apply {
+        code = current.code
+        name = current.name
+        score = current.score
     }
 }

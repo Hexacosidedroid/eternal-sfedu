@@ -6,6 +6,7 @@ data class EventDto(
     var date: Date? = null,
     var url: String? = null,
     var title: String? = null,
+    var location: String? = null,
     var text: String? = null,
     var photo: String? = null
 )

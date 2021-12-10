@@ -17,13 +17,21 @@ class EventController(
 ) {
     @GetMapping("/v1/event/getPaged?page={page}")
     fun getPaged(@PathVariable page: Long): MutableList<EventDto> {
-        val firstPageWithTenElements = PageRequest.of(page.toInt(), 10)
+        val firstPageWithTenElements = PageRequest.of(page.toInt(), 5)
         val allProducts = eventRepo.findAll(firstPageWithTenElements)
         val events = mutableListOf<EventDto>()
         allProducts.forEach {
             events.add(it.toDto())
         }
         return events
+    }
+
+    @GetMapping("/v1/event/getByTitle?title={title}")
+    fun getByTitle(@PathVariable title: String) {
+        val events = mutableListOf<EventDto>()
+        eventRepo.findAllByTitle(title).forEach {
+
+        }
     }
 
     @GetMapping("/v1/event/getAll")

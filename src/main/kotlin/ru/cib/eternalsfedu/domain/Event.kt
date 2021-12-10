@@ -17,7 +17,5 @@ data class Event(
     @field:Lob
     var photo: ByteArray? = null,
     @field:CreationTimestamp
-    var creationTime: Date? = null,
-    var heatCounter: Long? = null,
-    var heatExpirationTime: Date? = null,
+    var creationTime: Date? = null
 ) : Domain()
