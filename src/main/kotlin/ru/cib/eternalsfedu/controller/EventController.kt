@@ -39,9 +39,9 @@ class EventController(
     fun getAllCount() = eventRepo.findAll().toMutableList().size
 
     @PostMapping("/v1/event/add")
-    fun add(news: EventDto): String {
+    fun add(event: EventDto): String {
         return try {
-            eventRepo.save(news.toDomain())
+            eventRepo.save(event.toDomain())
             "OK"
         } catch (e: Exception) {
             e.message!!
