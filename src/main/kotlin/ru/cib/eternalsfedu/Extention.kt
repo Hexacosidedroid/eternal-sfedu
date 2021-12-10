@@ -4,9 +4,11 @@ import org.apache.commons.io.FileUtils
 import ru.cib.eternalsfedu.domain.Event
 import ru.cib.eternalsfedu.domain.News
 import ru.cib.eternalsfedu.domain.Program
+import ru.cib.eternalsfedu.domain.Registration
 import ru.cib.eternalsfedu.dto.EventDto
 import ru.cib.eternalsfedu.dto.NewsDto
 import ru.cib.eternalsfedu.dto.ProgramDto
+import ru.cib.eternalsfedu.dto.RegistrationDto
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -64,5 +66,27 @@ fun Program.toDto(): ProgramDto {
         code = current.code
         name = current.name
         score = current.score
+    }
+}
+
+fun RegistrationDto.toDomain(): Registration {
+    val current = this
+    return Registration().apply {
+        username = current.username
+        fio = current.fio
+        email = current.email
+        phone = current.phone
+        photo = Base64.getDecoder().decode(current.photo)
+    }
+}
+
+fun Registration.toDto(): RegistrationDto {
+    val current = this
+    return RegistrationDto().apply {
+        username = current.username
+        fio = current.fio
+        email = current.email
+        phone = current.phone
+        photo = Base64.getEncoder().encodeToString(current.photo)
     }
 }
