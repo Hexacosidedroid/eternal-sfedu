@@ -1,9 +1,7 @@
 package ru.cib.eternalsfedu.dto
 
-import java.util.*
-
 data class EventDto(
-    var date: Date? = null,
+    var date: String? = null,
     var url: String? = null,
     var title: String? = null,
     var location: String? = null,
