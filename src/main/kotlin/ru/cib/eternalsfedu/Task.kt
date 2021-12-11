@@ -27,6 +27,18 @@ class Task(
     @Value("\${path-jpg}")
     val path: String? = null
 
+    //@Value("\${amountOfImagesOnServer}")
+    //var amountOfImagesOnServer: Long = 0
+
+    /*fun generateImagePaths(): ArrayList<String> {
+        val pathList = ArrayList<String>()
+        for (i in 0 until amountOfImagesOnServer) {
+            val path = "/opt/uni$i.jpg"
+            pathList.add(path)
+        }
+        return pathList
+    }*/
+
     @Bean
     fun addPrograms() {
 //        val lines = File("src/main/resources/files/programs.txt").readLines()
@@ -45,6 +57,8 @@ class Task(
 
     @Bean
     fun addNews() {
+        //val pathList = generateImagePaths()
+        //var i = 0
         val count = mutableListOf<Long>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
         count.forEach {
             val fileContent = FileUtils.readFileToByteArray(File(path!!))
@@ -54,6 +68,7 @@ class Task(
                 text = "Это действительно новые горизонты"
                 photo = fileContent
             })
+            //i++
         }
         println("News saved")
     }
@@ -68,9 +83,9 @@ class Task(
             eventRepo.save(Event().apply {
                 date = values[0]
                 title = values[1]
-                text = values[2]
+                description = values[2]
                 url = values[3]
-                photo = fileContent
+                image = fileContent
             })
         }
         println("Events saved")
