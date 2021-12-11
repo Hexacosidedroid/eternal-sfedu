@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*
 import ru.cib.eternalsfedu.dto.EventDto
 import ru.cib.eternalsfedu.dto.NewsDto
 import ru.cib.eternalsfedu.repository.EventRepo
+import ru.cib.eternalsfedu.service.search.Search
 import ru.cib.eternalsfedu.toDomain
 import ru.cib.eternalsfedu.toDto
 
@@ -24,11 +25,12 @@ class EventController(
     }
 
     @PostMapping("/v1/event/getByTitle")
-    fun getByTitle(@RequestBody title: String) {
+    fun getByTitle(@RequestBody title: String): MutableList<EventDto> {
         val events = mutableListOf<EventDto>()
         eventRepo.findAllByTitle(title).forEach {
-
+            events.add(it.toDto())
         }
+        return events
     }
 
     @GetMapping("/v1/event/getAll")
@@ -42,6 +44,15 @@ class EventController(
 
     @GetMapping("/v1/event/getAllCount")
     fun getAllCount() = eventRepo.findAll().toMutableList().size
+
+    @PostMapping("/v1/event/search")
+    fun search(@RequestBody searchText: String): MutableList<EventDto> {
+        val events = mutableListOf<EventDto>()
+        eventRepo.findAllByTextLike(searchText).forEach {
+            events.add(it.toDto())
+        }
+        return events
+    }
 
     @PostMapping("/v1/event/add")
     fun add(@RequestBody event: EventDto): String {

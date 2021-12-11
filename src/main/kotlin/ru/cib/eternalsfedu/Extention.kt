@@ -70,7 +70,8 @@ fun RegistrationDto.toDomain(): Registration {
         fio = current.fio
         email = current.email
         phone = current.phone
-        photo = Base64.getDecoder().decode(current.photo)
+        snils = current.snils
+        password = current.password
     }
 }
 
@@ -81,14 +82,15 @@ fun Registration.toDto(): RegistrationDto {
         fio = current.fio
         email = current.email
         phone = current.phone
-        photo = Base64.getEncoder().encodeToString(current.photo)
+        snils = current.snils
+        password = current.password
     }
 }
 
 fun RankDto.toDomain(): Rank {
     val current = this
     return Rank().apply {
-        fio = current.fio
+        snils = current.snils
         score = current.score?.toLong()
     }
 }
@@ -96,7 +98,7 @@ fun RankDto.toDomain(): Rank {
 fun Rank.toDto(): RankDto {
     val current = this
     return RankDto().apply {
-        fio = current.fio
+        snils = current.snils
         score = current.score.toString()
     }
 }

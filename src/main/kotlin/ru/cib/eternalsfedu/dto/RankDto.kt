@@ -1,6 +1,6 @@
 package ru.cib.eternalsfedu.dto
 
 data class RankDto(
-    var fio: String? = null,
+    var snils: String? = null,
     var score: String? = null
 )

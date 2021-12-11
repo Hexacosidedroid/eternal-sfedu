@@ -5,5 +5,6 @@ data class RegistrationDto (
     var fio: String? = null,
     var email: String? = null,
     var phone: String? = null,
-    var photo: String? = null
+    var snils: String? = null,
+    var password: String? = null
 )

@@ -8,7 +8,7 @@ class Calculator(
     private val programRepo: ProgramRepo
 ) {
 
-    fun calculate(score: Map<String, Long>, code: String, name: String): Boolean {
+    fun calculateBoolean(score: Map<String, Long>, code: String, name: String): Boolean {
         val find = programRepo.findAllByCode(code)
         var response = false
         try {

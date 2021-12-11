@@ -6,14 +6,9 @@ import org.springframework.context.annotation.Bean
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
-import ru.cib.eternalsfedu.domain.Event
-import ru.cib.eternalsfedu.domain.News
-import ru.cib.eternalsfedu.domain.Program
-import ru.cib.eternalsfedu.domain.Rank
-import ru.cib.eternalsfedu.repository.EventRepo
-import ru.cib.eternalsfedu.repository.NewsRepo
-import ru.cib.eternalsfedu.repository.ProgramRepo
-import ru.cib.eternalsfedu.repository.RankRepo
+import ru.cib.eternalsfedu.domain.*
+import ru.cib.eternalsfedu.repository.*
+import ru.cib.eternalsfedu.utils.SNILS
 import java.io.File
 import java.nio.charset.Charset
 import java.util.*
@@ -24,7 +19,9 @@ class Task(
     private val newsRepo: NewsRepo,
     private val eventRepo: EventRepo,
     private val programRepo: ProgramRepo,
-    private val rankRepo: RankRepo
+    private val rankRepo: RankRepo,
+    private val achivmentRepo: AchivmentRepo,
+    private val registrationRepo: RegistrationRepo
 ) {
 
     @Value("\${path-jpg}")
@@ -32,14 +29,15 @@ class Task(
 
     @Bean
     fun addPrograms() {
-        val lines = File("src/main/resources/files/programs.txt").readLines()
-//        val lines = File("/opt/programs.txt").readLines()
+//        val lines = File("src/main/resources/files/programs.txt").readLines()
+        val lines = File("/opt/programs.txt").readLines()
         lines.forEach {
             val values = it.split("|")
             programRepo.save(Program().apply {
                 code = values[0]
                 name = values[1]
                 score = values[2]
+                midRange = values[3]
             })
         }
         println("Programs saved")
@@ -62,8 +60,8 @@ class Task(
 
     @Bean
     fun addEvents() {
-        val lines = File("src/main/resources/files/events.txt").readLines(Charset.forName("WINDOWS-1251"))
-//        val lines = File("/opt/events.txt").readLines(Charset.forName("WINDOWS-1251"))
+//        val lines = File("src/main/resources/files/events.txt").readLines(Charset.forName("WINDOWS-1251"))
+        val lines = File("/opt/events.txt").readLines(Charset.forName("WINDOWS-1251"))
         lines.forEach {
             val values = it.split("|")
             val fileContent = FileUtils.readFileToByteArray(File(path!!))
@@ -80,16 +78,48 @@ class Task(
 
     @Bean
     fun addRank() {
-        val lines = File("src/main/resources/files/fio.txt").readLines()
-//        val lines = File("/opt/fio.txt").readLines()
+//        val lines = File("src/main/resources/files/fio.txt").readLines()
+        val lines = File("/opt/fio.txt").readLines()
         lines.forEach {
             val values = it.split("|")
             rankRepo.save(Rank().apply {
-                fio = values[0]
+                snils = SNILS.Generate()
                 score = values[1].toLong()
             })
         }
         println("Rank saved")
+    }
+
+    @Bean
+    fun addAchivment() {
+//        val lines = File("src/main/resources/files/achivments.txt").readLines()
+        val lines = File("/opt/achivments.txt").readLines()
+        lines.forEach {
+            val values = it.split("|")
+            achivmentRepo.save(Achivment().apply {
+                name = values[0]
+                text = values[1]
+            })
+        }
+        println("Achivments saved")
+    }
+
+    @Bean
+    fun addRegistration() {
+//        val lines = File("src/main/resources/files/registration.txt").readLines()
+        val lines = File("/opt/registration.txt").readLines()
+        lines.forEach {
+            val values = it.split("|")
+            registrationRepo.save(Registration().apply {
+                username = values[0]
+                fio = values[1]
+                email = values[2]
+                phone = values[3]
+                snils = values[4]
+                password = values[5]
+            })
+        }
+        println("Registration saved")
     }
 
     @Scheduled(fixedDelay = 5000)

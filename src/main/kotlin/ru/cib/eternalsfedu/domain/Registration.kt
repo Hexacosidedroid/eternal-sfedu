@@ -13,8 +13,8 @@ data class Registration(
     var fio: String? = null,
     var email: String? = null,
     var phone: String? = null,
-    @field:Lob
-    var photo: ByteArray? = null,
+    var password: String? = null,
+    var snils: String? = null,
     @field:CreationTimestamp
     var creationTime: Date? = null,
 ) : Domain()

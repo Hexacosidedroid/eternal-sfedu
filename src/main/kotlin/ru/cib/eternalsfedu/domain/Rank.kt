@@ -6,6 +6,6 @@ import javax.persistence.Table
 @Entity
 @Table(name = "rank")
 data class Rank(
-    var fio: String? = null,
+    var snils: String? = null,
     var score: Long? = null
 ) : Domain()
