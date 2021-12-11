@@ -100,3 +100,21 @@ fun Rank.toDto(): RankDto {
         score = current.score.toString()
     }
 }
+
+fun AchivmentDto.toDomain(): Achivment {
+    val current = this
+    return Achivment().apply {
+        name = current.name
+        text = current.text
+        photo = Base64.getDecoder().decode(current.photo)
+    }
+}
+
+fun Achivment.toDto(): AchivmentDto {
+    val current = this
+    return AchivmentDto().apply {
+        name = current.name
+        text = current.text
+        photo = Base64.getEncoder().encodeToString(current.photo)
+    }
+}
