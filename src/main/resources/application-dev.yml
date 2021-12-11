@@ -13,3 +13,4 @@ spring:
         current_session_context_class: thread
     hibernate:
       ddl-auto: create
+path-jpg: "D:\\фото\\uni3.jpg"

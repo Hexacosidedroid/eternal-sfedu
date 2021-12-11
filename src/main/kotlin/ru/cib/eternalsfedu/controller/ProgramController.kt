@@ -1,10 +1,7 @@
 package ru.cib.eternalsfedu.controller
 
 import org.springframework.data.domain.PageRequest
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import ru.cib.eternalsfedu.dto.ProgramDto
 import ru.cib.eternalsfedu.repository.ProgramRepo
 import ru.cib.eternalsfedu.toDomain
@@ -15,8 +12,19 @@ class ProgramController(
     private val programRepo: ProgramRepo
 ) {
 
-    @GetMapping("/v1/program/getPaged?page={page}")
-    fun getPaged(@PathVariable page: Long): MutableList<ProgramDto> {
+    @PostMapping("/v1/program/getMidRange")
+    fun getMidRange(@RequestBody code: String): MutableList<ProgramDto> {
+        val programs = programRepo.findAllByCode(code)
+        val program = mutableListOf<ProgramDto>()
+        programs.forEach {
+            program.add(it.toDto())
+        }
+        return program
+    }
+
+
+    @PostMapping("/v1/program/getPaged")
+    fun getPaged(@RequestBody page: Long): MutableList<ProgramDto> {
         val firstPageWithTenElements = PageRequest.of(page.toInt(), 5)
         val allProducts = programRepo.findAll(firstPageWithTenElements)
         val program = mutableListOf<ProgramDto>()
@@ -39,7 +47,7 @@ class ProgramController(
     fun getAllCount() = programRepo.findAll().toMutableList().size
 
     @PostMapping("/v1/program/add")
-    fun add(news: ProgramDto): String {
+    fun add(@RequestBody news: ProgramDto): String {
         return try {
             programRepo.save(news.toDomain())
             "OK"

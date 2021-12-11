@@ -1,10 +1,7 @@
 package ru.cib.eternalsfedu.controller
 
 import org.springframework.data.domain.PageRequest
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import ru.cib.eternalsfedu.dto.NewsDto
 import ru.cib.eternalsfedu.repository.NewsRepo
 import ru.cib.eternalsfedu.toDomain
@@ -15,9 +12,9 @@ import ru.cib.eternalsfedu.toDto
 class NewsController(
     private val newsRepo: NewsRepo
 ) {
-    @GetMapping("/v1/news/getPaged?page={page}")
-    fun getPaged(@PathVariable page: Long): MutableList<NewsDto> {
-        val firstPageWithTenElements = PageRequest.of(page.toInt(), 5)
+    @PostMapping("/v1/news/getPaged")
+    fun getPaged(@RequestBody page: Int): MutableList<NewsDto> {
+        val firstPageWithTenElements = PageRequest.of(page, 5)
         val allProducts = newsRepo.findAll(firstPageWithTenElements)
         val news = mutableListOf<NewsDto>()
         allProducts.forEach {
@@ -39,7 +36,7 @@ class NewsController(
     fun getAllCount() = newsRepo.findAll().toMutableList().size
 
     @PostMapping("/v1/news/add")
-    fun add(news: NewsDto): String {
+    fun add(@RequestBody news: NewsDto): String {
         return try {
             newsRepo.save(news.toDomain())
             "OK"

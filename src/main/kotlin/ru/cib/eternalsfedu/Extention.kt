@@ -1,15 +1,7 @@
 package ru.cib.eternalsfedu
 
-import org.apache.commons.io.FileUtils
-import ru.cib.eternalsfedu.domain.Event
-import ru.cib.eternalsfedu.domain.News
-import ru.cib.eternalsfedu.domain.Program
-import ru.cib.eternalsfedu.domain.Registration
-import ru.cib.eternalsfedu.dto.EventDto
-import ru.cib.eternalsfedu.dto.NewsDto
-import ru.cib.eternalsfedu.dto.ProgramDto
-import ru.cib.eternalsfedu.dto.RegistrationDto
-import java.io.File
+import ru.cib.eternalsfedu.domain.*
+import ru.cib.eternalsfedu.dto.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -17,8 +9,8 @@ fun NewsDto.toDomain(): News {
     val current = this
     return News().apply {
         title = current.title
-        photo = Base64.getDecoder().decode(current.photo)
-        text = current.text
+        photo = Base64.getDecoder().decode(current.image)
+        text = current.description
     }
 }
 
@@ -26,8 +18,8 @@ fun News.toDto(): NewsDto {
     val current = this
     return NewsDto().apply {
         title = current.title
-        photo = Base64.getEncoder().encodeToString(current.photo)
-        text = current.text
+        image = Base64.getEncoder().encodeToString(current.photo)
+        description = current.text
     }
 }
 
@@ -57,6 +49,7 @@ fun ProgramDto.toDomain(): Program {
         code = current.code
         name = current.name
         score = current.score
+        midRange = current.midRange
     }
 }
 
@@ -66,6 +59,7 @@ fun Program.toDto(): ProgramDto {
         code = current.code
         name = current.name
         score = current.score
+        midRange = current.midRange
     }
 }
 
@@ -88,5 +82,21 @@ fun Registration.toDto(): RegistrationDto {
         email = current.email
         phone = current.phone
         photo = Base64.getEncoder().encodeToString(current.photo)
+    }
+}
+
+fun RankDto.toDomain(): Rank {
+    val current = this
+    return Rank().apply {
+        fio = current.fio
+        score = current.score?.toLong()
+    }
+}
+
+fun Rank.toDto(): RankDto {
+    val current = this
+    return RankDto().apply {
+        fio = current.fio
+        score = current.score.toString()
     }
 }

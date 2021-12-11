@@ -1,10 +1,7 @@
 package ru.cib.eternalsfedu.controller
 
 import org.springframework.data.domain.PageRequest
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import ru.cib.eternalsfedu.dto.EventDto
 import ru.cib.eternalsfedu.dto.NewsDto
 import ru.cib.eternalsfedu.repository.EventRepo
@@ -15,8 +12,8 @@ import ru.cib.eternalsfedu.toDto
 class EventController(
     private val eventRepo: EventRepo
 ) {
-    @GetMapping("/v1/event/getPaged?page={page}")
-    fun getPaged(@PathVariable page: Long): MutableList<EventDto> {
+    @PostMapping("/v1/event/getPaged")
+    fun getPaged(@RequestBody page: Long): MutableList<EventDto> {
         val firstPageWithTenElements = PageRequest.of(page.toInt(), 5)
         val allProducts = eventRepo.findAll(firstPageWithTenElements)
         val events = mutableListOf<EventDto>()
@@ -26,8 +23,8 @@ class EventController(
         return events
     }
 
-    @GetMapping("/v1/event/getByTitle?title={title}")
-    fun getByTitle(@PathVariable title: String) {
+    @PostMapping("/v1/event/getByTitle")
+    fun getByTitle(@RequestBody title: String) {
         val events = mutableListOf<EventDto>()
         eventRepo.findAllByTitle(title).forEach {
 
@@ -47,7 +44,7 @@ class EventController(
     fun getAllCount() = eventRepo.findAll().toMutableList().size
 
     @PostMapping("/v1/event/add")
-    fun add(event: EventDto): String {
+    fun add(@RequestBody event: EventDto): String {
         return try {
             eventRepo.save(event.toDomain())
             "OK"
