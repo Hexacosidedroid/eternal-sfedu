@@ -2,15 +2,14 @@ package ru.cib.eternalsfedu
 
 import ru.cib.eternalsfedu.domain.*
 import ru.cib.eternalsfedu.dto.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 fun NewsDto.toDomain(): News {
     val current = this
     return News().apply {
         title = current.title
-        photo = Base64.getDecoder().decode(current.image)
-        text = current.description
+        image = Base64.getDecoder().decode(current.image)
+        description = current.description
     }
 }
 
@@ -18,8 +17,8 @@ fun News.toDto(): NewsDto {
     val current = this
     return NewsDto().apply {
         title = current.title
-        image = Base64.getEncoder().encodeToString(current.photo)
-        description = current.text
+        image = Base64.getEncoder().encodeToString(current.image)
+        description = current.description
     }
 }
 

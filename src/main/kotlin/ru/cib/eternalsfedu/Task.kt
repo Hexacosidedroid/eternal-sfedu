@@ -59,6 +59,7 @@ class Task(
         println("Programs saved")
     }
 
+    /*
     @Bean
     fun addNews() {
         val count = mutableListOf<Long>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
@@ -69,6 +70,25 @@ class Task(
                 title = "Новые горизонты $it"
                 text = "Это действительно новые горизонты"
                 photo = fileContent
+            })
+        }
+        println("News saved")
+    }*/
+
+    @Bean
+    fun addNews() {
+        val pathList = generateImagePaths()
+//        val lines = File("src/main/resources/files/events.txt").readLines(Charset.forName("WINDOWS-1251"))
+        val lines = File("/opt/events.txt").readLines(Charset.forName("WINDOWS-1251"))
+        lines.forEach {
+            val values = it.split("|")
+            pathList.forEach { path ->
+                fileContent = FileUtils.readFileToByteArray(File(path))
+            }
+            newsRepo.save(News().apply {
+                title = values[1]
+                description = values[2]
+                image = fileContent
             })
         }
         println("News saved")
