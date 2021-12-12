@@ -16,28 +16,30 @@ import java.util.*
 @Service
 @EnableScheduling
 class Task(
-    private val newsRepo: NewsRepo,
-    private val eventRepo: EventRepo,
-    private val programRepo: ProgramRepo,
-    private val rankRepo: RankRepo,
-    private val achivmentRepo: AchivmentRepo,
-    private val registrationRepo: RegistrationRepo
+        private val newsRepo: NewsRepo,
+        private val eventRepo: EventRepo,
+        private val programRepo: ProgramRepo,
+        private val rankRepo: RankRepo,
+        private val achivmentRepo: AchivmentRepo,
+        private val registrationRepo: RegistrationRepo,
+
+        private var fileContent: ByteArray?
 ) {
 
     @Value("\${path-jpg}")
     val path: String? = null
 
-    //@Value("\${amountOfImagesOnServer}")
-    //var amountOfImagesOnServer: Long = 0
+    @Value("\${amountOfImagesOnServer}")
+    var amountOfImagesOnServer: Long = 0
 
-    /*fun generateImagePaths(): ArrayList<String> {
+    fun generateImagePaths(): ArrayList<String> {
         val pathList = ArrayList<String>()
-        for (i in 0 until amountOfImagesOnServer) {
+        for (i in 0 until amountOfImagesOnServer+1) {
             val path = "/opt/uni$i.jpg"
             pathList.add(path)
         }
         return pathList
-    }*/
+    }
 
     @Bean
     fun addPrograms() {
@@ -57,8 +59,6 @@ class Task(
 
     @Bean
     fun addNews() {
-        //val pathList = generateImagePaths()
-        //var i = 0
         val count = mutableListOf<Long>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
         count.forEach {
             val fileContent = FileUtils.readFileToByteArray(File(path!!))
@@ -68,18 +68,21 @@ class Task(
                 text = "Это действительно новые горизонты"
                 photo = fileContent
             })
-            //i++
         }
         println("News saved")
     }
 
     @Bean
     fun addEvents() {
+        val pathList = generateImagePaths()
+        val iterator = pathList.iterator()
 //        val lines = File("src/main/resources/files/events.txt").readLines(Charset.forName("WINDOWS-1251"))
         val lines = File("/opt/events.txt").readLines(Charset.forName("WINDOWS-1251"))
         lines.forEach {
             val values = it.split("|")
-            val fileContent = FileUtils.readFileToByteArray(File(path!!))
+            if (iterator.hasNext()){
+                fileContent = FileUtils.readFileToByteArray(File(iterator.next()!!))
+            }
             eventRepo.save(Event().apply {
                 date = values[0]
                 title = values[1]
