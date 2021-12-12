@@ -14,4 +14,3 @@ spring:
     hibernate:
       ddl-auto: create
 path-jpg: "/opt/uni3.jpg"
-amountOfImagesOnServer: 0

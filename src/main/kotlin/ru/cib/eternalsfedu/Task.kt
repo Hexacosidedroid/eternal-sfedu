@@ -22,23 +22,25 @@ class Task(
         private val rankRepo: RankRepo,
         private val achivmentRepo: AchivmentRepo,
         private val registrationRepo: RegistrationRepo,
-
-        private var fileContent: ByteArray?
 ) {
 
     @Value("\${path-jpg}")
     val path: String? = null
+    private var fileContent: ByteArray? = null
 
-    @Value("\${amountOfImagesOnServer}")
-    var amountOfImagesOnServer: Long = 0
-
-    fun generateImagePaths(): ArrayList<String> {
-        val pathList = ArrayList<String>()
-        for (i in 0 until amountOfImagesOnServer+1) {
-            val path = "/opt/uni$i.jpg"
-            pathList.add(path)
-        }
-        return pathList
+    fun generateImagePaths(): MutableList<String> {
+        val images = mutableListOf<String>()
+        images.add("/opt/uni1.jpg")
+        images.add("/opt/uni2.jpg")
+        images.add("/opt/uni3.jpg")
+        images.add("/opt/uni4.jpg")
+        images.add("/opt/uni5.jpg")
+//        images.add("D:\\фото\\uni1.jpg")
+//        images.add("D:\\фото\\uni2.jpg")
+//        images.add("D:\\фото\\uni3.jpg")
+//        images.add("D:\\фото\\uni4.jpg")
+//        images.add("D:\\фото\\uni5.jpg")
+        return images
     }
 
     @Bean
@@ -75,13 +77,12 @@ class Task(
     @Bean
     fun addEvents() {
         val pathList = generateImagePaths()
-        val iterator = pathList.iterator()
 //        val lines = File("src/main/resources/files/events.txt").readLines(Charset.forName("WINDOWS-1251"))
         val lines = File("/opt/events.txt").readLines(Charset.forName("WINDOWS-1251"))
         lines.forEach {
             val values = it.split("|")
-            if (iterator.hasNext()){
-                fileContent = FileUtils.readFileToByteArray(File(iterator.next()!!))
+            pathList.forEach { path ->
+                fileContent = FileUtils.readFileToByteArray(File(path))
             }
             eventRepo.save(Event().apply {
                 date = values[0]
