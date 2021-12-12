@@ -48,7 +48,7 @@ class EventController(
     @PostMapping("/v1/event/search")
     fun search(@RequestBody searchText: String): MutableList<EventDto> {
         val events = mutableListOf<EventDto>()
-        eventRepo.findAllByTextLike(searchText).forEach {
+        eventRepo.findAllByDescriptionLike(searchText).forEach {
             events.add(it.toDto())
         }
         return events

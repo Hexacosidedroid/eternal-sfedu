@@ -5,5 +5,5 @@ import ru.cib.eternalsfedu.domain.Event
 
 interface EventRepo : PagingAndSortingRepository<Event, Long> {
     fun findAllByTitle(title: String): MutableList<Event>
-    fun findAllByTextLike(text: String): MutableList<Event>
+    fun findAllByDescriptionLike(text: String): MutableList<Event>
 }

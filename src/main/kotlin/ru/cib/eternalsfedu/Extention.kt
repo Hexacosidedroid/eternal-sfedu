@@ -26,7 +26,7 @@ fun News.toDto(): NewsDto {
 fun EventDto.toDomain(): Event {
     val current = this
     return Event().apply {
-        date = SimpleDateFormat("dd.MM.yyyy").format(current.date)
+        date = current.date
         title = current.title
         description = current.description
         image = Base64.getDecoder().decode(current.image)
@@ -36,7 +36,7 @@ fun EventDto.toDomain(): Event {
 fun Event.toDto(): EventDto {
     val current = this
     return EventDto().apply {
-        date = SimpleDateFormat("dd.MM.yyyy").format(current.date)
+        date = current.date
         title = current.title
         description = current.description
         image = Base64.getEncoder().encodeToString(current.image)
