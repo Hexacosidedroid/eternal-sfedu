@@ -9,6 +9,6 @@ class Search(
 ) {
 
     fun searchEvents(searchText: String) {
-        eventRepo.findAllByTextLike(searchText)
+        eventRepo.findAllByDescriptionLike(searchText)
     }
 }

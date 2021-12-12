@@ -12,12 +12,13 @@ import javax.persistence.Table
 data class Event(
     var date: String? = null,
     var url: String? = null,
+    @Column(length = 2500)
     var title: String? = null,
     @Column(length = 2500)
-    var text: String? = null,
+    var description: String? = null,
     var location: String? = null,
     @field:Lob
-    var photo: ByteArray? = null,
+    var image: ByteArray? = null,
     @field:CreationTimestamp
     var creationTime: Date? = null
 ) : Domain()

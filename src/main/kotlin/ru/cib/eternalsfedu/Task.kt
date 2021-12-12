@@ -21,11 +21,31 @@ class Task(
     private val programRepo: ProgramRepo,
     private val rankRepo: RankRepo,
     private val achivmentRepo: AchivmentRepo,
-    private val registrationRepo: RegistrationRepo
+    private val registrationRepo: RegistrationRepo,
 ) {
+    private var fileContent: ByteArray? = null
 
-    @Value("\${path-jpg}")
-    val path: String? = null
+    fun generateImagePaths(): String? {
+        val r = Random()
+        val low = 0
+        val high = 4
+        return when (r.nextInt(high - low) + low) {
+            0 -> "/opt/uni1.jpg"
+            1 -> "/opt/uni2.jpg"
+            2 -> "/opt/uni3.jpg"
+            3 -> "/opt/uni4.jpg"
+            4 -> "/opt/uni5.jpg"
+            else -> null
+        }
+//        return when (r.nextInt(high - low) + low) {
+//            0 -> "D:\\фото\\uni1.jpg"
+//            1 -> "D:\\фото\\uni2.jpg"
+//            2 -> "D:\\фото\\uni3.jpg"
+//            3 -> "D:\\фото\\uni4.jpg"
+//            4 -> "D:\\фото\\uni5.jpg"
+//            else -> null
+//        }
+    }
 
     @Bean
     fun addPrograms() {
@@ -45,14 +65,16 @@ class Task(
 
     @Bean
     fun addNews() {
-        val count = mutableListOf<Long>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
-        count.forEach {
-            val fileContent = FileUtils.readFileToByteArray(File(path!!))
+//        val lines = File("src/main/resources/files/events.txt").readLines(Charset.forName("WINDOWS-1251"))
+        val lines = File("/opt/events.txt").readLines(Charset.forName("WINDOWS-1251"))
+        lines.forEach {
+            val path = generateImagePaths()
+            val values = it.split("|")
+            fileContent = FileUtils.readFileToByteArray(File(path!!))
             newsRepo.save(News().apply {
-                date = "02.01.2021"
-                title = "Новые горизонты $it"
-                text = "Это действительно новые горизонты"
-                photo = fileContent
+                title = values[1]
+                description = values[2]
+                image = fileContent
             })
         }
         println("News saved")
@@ -63,14 +85,15 @@ class Task(
 //        val lines = File("src/main/resources/files/events.txt").readLines(Charset.forName("WINDOWS-1251"))
         val lines = File("/opt/events.txt").readLines(Charset.forName("WINDOWS-1251"))
         lines.forEach {
+            val path = generateImagePaths()
             val values = it.split("|")
-            val fileContent = FileUtils.readFileToByteArray(File(path!!))
+                fileContent = FileUtils.readFileToByteArray(File(path!!))
             eventRepo.save(Event().apply {
                 date = values[0]
                 title = values[1]
-                text = values[2]
+                description = values[2]
                 url = values[3]
-                photo = fileContent
+                image = fileContent
             })
         }
         println("Events saved")
