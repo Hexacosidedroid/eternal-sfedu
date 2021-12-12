@@ -16,31 +16,35 @@ import java.util.*
 @Service
 @EnableScheduling
 class Task(
-        private val newsRepo: NewsRepo,
-        private val eventRepo: EventRepo,
-        private val programRepo: ProgramRepo,
-        private val rankRepo: RankRepo,
-        private val achivmentRepo: AchivmentRepo,
-        private val registrationRepo: RegistrationRepo,
+    private val newsRepo: NewsRepo,
+    private val eventRepo: EventRepo,
+    private val programRepo: ProgramRepo,
+    private val rankRepo: RankRepo,
+    private val achivmentRepo: AchivmentRepo,
+    private val registrationRepo: RegistrationRepo,
 ) {
-
-    @Value("\${path-jpg}")
-    val path: String? = null
     private var fileContent: ByteArray? = null
 
-    fun generateImagePaths(): MutableList<String> {
-        val images = mutableListOf<String>()
-        images.add("/opt/uni1.jpg")
-        images.add("/opt/uni2.jpg")
-        images.add("/opt/uni3.jpg")
-        images.add("/opt/uni4.jpg")
-        images.add("/opt/uni5.jpg")
-//        images.add("D:\\фото\\uni1.jpg")
-//        images.add("D:\\фото\\uni2.jpg")
-//        images.add("D:\\фото\\uni3.jpg")
-//        images.add("D:\\фото\\uni4.jpg")
-//        images.add("D:\\фото\\uni5.jpg")
-        return images
+    fun generateImagePaths(): String? {
+        val r = Random()
+        val low = 0
+        val high = 4
+        return when (r.nextInt(high - low) + low) {
+            0 -> "/opt/uni1.jpg"
+            1 -> "/opt/uni2.jpg"
+            2 -> "/opt/uni3.jpg"
+            3 -> "/opt/uni4.jpg"
+            4 -> "/opt/uni5.jpg"
+            else -> null
+        }
+//        return when (r.nextInt(high - low) + low) {
+//            0 -> "D:\\фото\\uni1.jpg"
+//            1 -> "D:\\фото\\uni2.jpg"
+//            2 -> "D:\\фото\\uni3.jpg"
+//            3 -> "D:\\фото\\uni4.jpg"
+//            4 -> "D:\\фото\\uni5.jpg"
+//            else -> null
+//        }
     }
 
     @Bean
@@ -59,32 +63,14 @@ class Task(
         println("Programs saved")
     }
 
-    /*
     @Bean
     fun addNews() {
-        val count = mutableListOf<Long>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
-        count.forEach {
-            val fileContent = FileUtils.readFileToByteArray(File(path!!))
-            newsRepo.save(News().apply {
-                date = "02.01.2021"
-                title = "Новые горизонты $it"
-                text = "Это действительно новые горизонты"
-                photo = fileContent
-            })
-        }
-        println("News saved")
-    }*/
-
-    @Bean
-    fun addNews() {
-        val pathList = generateImagePaths()
 //        val lines = File("src/main/resources/files/events.txt").readLines(Charset.forName("WINDOWS-1251"))
         val lines = File("/opt/events.txt").readLines(Charset.forName("WINDOWS-1251"))
         lines.forEach {
+            val path = generateImagePaths()
             val values = it.split("|")
-            pathList.forEach { path ->
-                fileContent = FileUtils.readFileToByteArray(File(path))
-            }
+            fileContent = FileUtils.readFileToByteArray(File(path!!))
             newsRepo.save(News().apply {
                 title = values[1]
                 description = values[2]
@@ -96,14 +82,12 @@ class Task(
 
     @Bean
     fun addEvents() {
-        val pathList = generateImagePaths()
 //        val lines = File("src/main/resources/files/events.txt").readLines(Charset.forName("WINDOWS-1251"))
         val lines = File("/opt/events.txt").readLines(Charset.forName("WINDOWS-1251"))
         lines.forEach {
+            val path = generateImagePaths()
             val values = it.split("|")
-            pathList.forEach { path ->
-                fileContent = FileUtils.readFileToByteArray(File(path))
-            }
+                fileContent = FileUtils.readFileToByteArray(File(path!!))
             eventRepo.save(Event().apply {
                 date = values[0]
                 title = values[1]

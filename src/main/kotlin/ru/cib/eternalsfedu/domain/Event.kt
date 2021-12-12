@@ -12,6 +12,7 @@ import javax.persistence.Table
 data class Event(
     var date: String? = null,
     var url: String? = null,
+    @Column(length = 2500)
     var title: String? = null,
     @Column(length = 2500)
     var description: String? = null,
