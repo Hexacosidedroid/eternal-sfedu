@@ -29,28 +29,28 @@ class Task(
         val r = Random()
         val low = 0
         val high = 4
-        return when (r.nextInt(high - low) + low) {
-            0 -> "/opt/uni1.jpg"
-            1 -> "/opt/uni2.jpg"
-            2 -> "/opt/uni3.jpg"
-            3 -> "/opt/uni4.jpg"
-            4 -> "/opt/uni5.jpg"
-            else -> null
-        }
 //        return when (r.nextInt(high - low) + low) {
-//            0 -> "D:\\фото\\uni1.jpg"
-//            1 -> "D:\\фото\\uni2.jpg"
-//            2 -> "D:\\фото\\uni3.jpg"
-//            3 -> "D:\\фото\\uni4.jpg"
-//            4 -> "D:\\фото\\uni5.jpg"
+//            0 -> "/opt/uni1.jpg"
+//            1 -> "/opt/uni2.jpg"
+//            2 -> "/opt/uni3.jpg"
+//            3 -> "/opt/uni4.jpg"
+//            4 -> "/opt/uni5.jpg"
 //            else -> null
 //        }
+        return when (r.nextInt(high - low) + low) {
+            0 -> "D:\\фото\\uni1.jpg"
+            1 -> "D:\\фото\\uni2.jpg"
+            2 -> "D:\\фото\\uni3.jpg"
+            3 -> "D:\\фото\\uni4.jpg"
+            4 -> "D:\\фото\\uni5.jpg"
+            else -> null
+        }
     }
 
     @Bean
     fun addPrograms() {
-//        val lines = File("src/main/resources/files/programs.txt").readLines()
-        val lines = File("/opt/programs.txt").readLines()
+        val lines = File("src/main/resources/files/programs.txt").readLines()
+//        val lines = File("/opt/programs.txt").readLines()
         lines.forEach {
             val values = it.split("|")
             programRepo.save(Program().apply {
@@ -65,8 +65,8 @@ class Task(
 
     @Bean
     fun addNews() {
-//        val lines = File("src/main/resources/files/events.txt").readLines(Charset.forName("WINDOWS-1251"))
-        val lines = File("/opt/events.txt").readLines(Charset.forName("WINDOWS-1251"))
+        val lines = File("src/main/resources/files/events.txt").readLines(Charset.forName("WINDOWS-1251"))
+//        val lines = File("/opt/events.txt").readLines(Charset.forName("WINDOWS-1251"))
         lines.forEach {
             val path = generateImagePaths()
             val values = it.split("|")
@@ -82,8 +82,8 @@ class Task(
 
     @Bean
     fun addEvents() {
-//        val lines = File("src/main/resources/files/events.txt").readLines(Charset.forName("WINDOWS-1251"))
-        val lines = File("/opt/events.txt").readLines(Charset.forName("WINDOWS-1251"))
+        val lines = File("src/main/resources/files/events.txt").readLines(Charset.forName("WINDOWS-1251"))
+//        val lines = File("/opt/events.txt").readLines(Charset.forName("WINDOWS-1251"))
         lines.forEach {
             val path = generateImagePaths()
             val values = it.split("|")
@@ -101,8 +101,8 @@ class Task(
 
     @Bean
     fun addRank() {
-//        val lines = File("src/main/resources/files/fio.txt").readLines()
-        val lines = File("/opt/fio.txt").readLines()
+        val lines = File("src/main/resources/files/fio.txt").readLines()
+//        val lines = File("/opt/fio.txt").readLines()
         lines.forEach {
             val values = it.split("|")
             rankRepo.save(Rank().apply {
@@ -115,8 +115,8 @@ class Task(
 
     @Bean
     fun addAchivment() {
-//        val lines = File("src/main/resources/files/achivments.txt").readLines()
-        val lines = File("/opt/achivments.txt").readLines()
+        val lines = File("src/main/resources/files/achivments.txt").readLines()
+//        val lines = File("/opt/achivments.txt").readLines()
         lines.forEach {
             val values = it.split("|")
             achivmentRepo.save(Achivment().apply {
@@ -129,8 +129,8 @@ class Task(
 
     @Bean
     fun addRegistration() {
-//        val lines = File("src/main/resources/files/registration.txt").readLines()
-        val lines = File("/opt/registration.txt").readLines()
+        val lines = File("src/main/resources/files/registration.txt").readLines()
+//        val lines = File("/opt/registration.txt").readLines()
         lines.forEach {
             val values = it.split("|")
             registrationRepo.save(Registration().apply {
