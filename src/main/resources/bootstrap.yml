@@ -1,0 +1,39 @@
+server:
+  port: 9091
+
+spring:
+  application:
+    name: eternal-sfedu
+  cloud:
+    vault:
+      host: localhost
+      port: 8200
+      scheme: http
+      authentication: TOKEN
+      token: "s.geHKtzTBaAU7SmqPMfBuNgXB"
+      #s.geHKtzTBaAU7SmqPMfBuNgXB - token root
+      #s.TIedqOAvI1DKVYnlPpiGn6DL - token generated
+      kv:
+        enabled: false
+      databases:
+        postgres:
+          enabled: true
+          backend: database
+          username-property: spring.datasource.username
+          password-property: spring.datasource.password
+          role: postgres_all_grants
+  config.import: vault://
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: "jdbc:postgresql://localhost:5432/postgres"
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        enable_lazy_load_no_trans: true
+        current_session_context_class: thread
+    hibernate:
+      ddl-auto: create
+path-jpg: "D:\\фото\\uni3.jpg"
